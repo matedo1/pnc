@@ -30,19 +30,19 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <div pf-list-view class="list-group list-view-pf list-view-pf-view"
+      <pf-list-view class="list-group list-view-pf list-view-pf-view"
                         id="add-build-groups-{{::$id}}"
                         config="$ctrl.config"
                         items="$ctrl.buildConfigs"
                         action-buttons="$ctrl.actionButtons"
                         ng-if="$ctrl.buildConfigs.length > 0">
 
-          <div class="list-view-pf-description">
-            <div class="list-group-item-heading">
-              {{ item.name }}
+        <div class="list-view-pf-description">
+          <div class="list-group-item-heading">
+            {{ item.name }}
           </div>
         </div>
-      </div>
+      </pf-list-view>
     </div>
   </div>
 </div>

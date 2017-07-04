@@ -59,7 +59,7 @@
       '</ul>' +
       '<div>' +
         '<input type="text" ng-model="selectedItem" placeholder="{{ placeholder }}" ' +
-               'typeahead="item as item[displayProperty] for item in query({$viewValue: $viewValue})" ' +
+               'uib-typeahead="item as item[displayProperty] for item in query({$viewValue: $viewValue})" ' +
                'typeahead-editable="false" typeahead-loading="loadingLocations" class="form-control" ' +
                'typeahead-on-select="onSelect($item, $model, $label)" typeahead-wait-ms="200">' +
         '<span ng-show="loadingLocations" class="spinner spinner-xs spinner-inline"></span>' +

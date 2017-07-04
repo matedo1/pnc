@@ -191,13 +191,6 @@
 
       var that = this;
 
-      that.dpOptions = {
-        autoclose: true,
-        todayBtn: 'linked',
-        todayHighlight: true,
-        format: 'yyyy/mm/dd'
-      };
-
       that.product = productDetail;
       that.productVersion = versionDetail;
 
@@ -211,6 +204,13 @@
       } else {
         that.endDate = new Date(that.data.endDate);
       }
+
+      $('.pnc-datepicker').datepicker({
+        autoclose: true,
+        todayBtn: 'linked',
+        todayHighlight: true,
+        format: 'mm/dd/yyyy'
+      });
 
       that.submit = function() {
 
