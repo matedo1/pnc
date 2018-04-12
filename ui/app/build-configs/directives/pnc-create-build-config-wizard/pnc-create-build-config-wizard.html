@@ -36,6 +36,7 @@
     <pf-wizard-step step-title="Build Config" substeps="true" step-id="build-config" step-priority="20" substeps=true show-review="true" show-review-details="true">
 
       <pf-wizard-substep step-title="General" step-id="general" step-priority="10" next-enabled="$ctrl.generalForm.$valid" show-review="true" show-review-details="true" review-template="build-configs/directives/pnc-create-build-config-wizard/review-build-config-general.html">
+        {{$ctrl.wizardData.general}}
         <form name="$ctrl.generalForm" novalidate>
           <pnc-create-build-config-general-form ng-model="$ctrl.wizardData.general"></pnc-create-build-config-general-form>
         </form>
@@ -60,6 +61,7 @@
 
     <pf-wizard-step step-title="Repository" substeps="true" step-id="repository" step-priority="30" next-enabled="$ctrl.repoForm.$valid" substeps=true show-review="true" show-review-details="false" review-template="build-configs/directives/pnc-create-build-config-wizard/review-repo-config.html">
       <pf-wizard-substep step-title="Select" step-id="repositorySelect" step-priority="10">
+        {{$ctrl.wizardData.repoConfig}}
         <form name="$ctrl.repoForm" novalidate>
           <pnc-select-repository ng-model="$ctrl.wizardData.repoConfig"></pnc-select-repository>
         </form>
@@ -74,7 +76,7 @@
       <pf-wizard-substep step-title="Create" step-id="review-create" step-priority="20" wz-disabled="false" on-show="$ctrl.create">
         
         <!-- Display when loading -->
-        <div class="wizard-pf-contents" ng-if="!$ctrl.wizardDone">
+        <div class="wizard-pf-contents" ng-if="!$ctrl.wizardDone && !$ctrl.createError">
           <div class="wizard-pf-process blank-slate-pf">
             <div class="spinner spinner-lg blank-slate-pf-icon"></div>
             <h5 class="blank-slate-pf-main-action">Creating Build Config</h5>
@@ -96,10 +98,11 @@
         </div>
 
         <!-- Display on error -->
-        <div class="wizard-pf-contents" ng-if="$ctrl.wizardDone && $ctrl.createError">        
-          <div class="wizard-pf-complete blank-slate-pf" ng-if="$ctrl.wizardDone && $ctrl.createError">
+        <div class="wizard-pf-contents" ng-if="$ctrl.createError">        
+          <div class="wizard-pf-complete blank-slate-pf">
             <div class="wizard-pf-error-icon"><span class="glyphicon glyphicon-remove-circle"></span></div>
             <h5 class="blank-slate-pf-main-action">Error</h5>
+            <span ng-click="$ctrl.openWizardModalB()">open modal again</span>
             <!-- <p class="blank-slate-pf-secondary-action">There was an error whilst creating the Build Config</p> -->
           </div>
           <ul class="list-unstyled">

@@ -33,7 +33,7 @@
 
 
     // -- Controller API --
-    
+  
     $ctrl.userData = {};
     $ctrl.checkForRepo = checkForRepo;
     $ctrl.isLoading = isLoading;
@@ -43,15 +43,19 @@
 
 
     $ctrl.$onInit = function () {
-      $ctrl.userData.preBuildSyncEnabled = true;
       $ctrl.ngModel.$render = function () {
-        $ctrl.userData = $ctrl.ngModel.$viewValue;
+        $ctrl.userData = $ctrl.ngModel.$modelValue;
+
+        // set default only if there is no initial value coming from ng model
+        if (!$ctrl.userData.hasOwnProperty('preBuildSyncEnabled')) {
+          $ctrl.userData.preBuildSyncEnabled = true;
+        }
       };
     };
 
     $ctrl.$doCheck = function () {
       var latestDigest = digest();
-      if (previousDigest !== latestDigest) {
+      if ((previousDigest !== latestDigest) && !_.isEmpty($ctrl.userData)) {
         $ctrl.ngModel.$setViewValue(parseViewData());
         previousDigest = latestDigest;
       }

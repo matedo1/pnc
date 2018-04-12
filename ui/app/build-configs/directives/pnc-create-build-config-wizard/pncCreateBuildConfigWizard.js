@@ -20,8 +20,9 @@
 
   angular.module('pnc.build-configs').component('pncCreateBuildConfigWizard', {
     templateUrl: 'build-configs/directives/pnc-create-build-config-wizard/pnc-create-build-config-wizard.html',
-    controller: ['$log', '$scope', '$timeout', 'eventTypes', 'RepositoryConfiguration', 'BuildConfiguration', Controller],
+    controller: ['$log', '$uibModal', '$scope', '$timeout', 'eventTypes', 'RepositoryConfiguration', 'BuildConfiguration', Controller],
     bindings: {
+      modalInstance: '<',
       initialValues: '<',
       project: '<',
       resolve: '<',
@@ -29,12 +30,12 @@
     }
   });
 
-  function Controller($log, $scope, $timeout, eventTypes, RepositoryConfiguration, BuildConfiguration) {
+  function Controller($log, $uibModal, $scope, $timeout, eventTypes, RepositoryConfiguration, BuildConfiguration) {
     var $ctrl = this,
         emptyWizardData = {
           general: {},
           buildParameters: {},
-          dependencies: {},
+          dependencies: [],
           repoConfig: {}
         };
 
@@ -57,7 +58,7 @@
     // --------------------
 
     $ctrl.$onInit = function () {
-      $ctrl.wizardData = angular.extend({}, emptyWizardData, $ctrl.initialValues);
+      $ctrl.wizardData = angular.extend({}, emptyWizardData, $ctrl.resolve.initialValues);
       $ctrl.wizardData.project = $ctrl.resolve.project;
     };
 
@@ -74,6 +75,27 @@
           break;
       } 
     }
+
+
+    $ctrl.openWizardModalB = function () {
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        component: 'pncCreateBuildConfigWizard',
+        size: 'lg',
+        resolve: {
+          project: function () {
+            return $ctrl.wizardData.project;
+          },
+          initialValues: function () {
+            return $ctrl.wizardData;
+          }
+        }
+      });
+
+      // close previous modal instance
+      $ctrl.modalInstance.close();
+    };
 
     function onShowReviewSummary() {
       $ctrl.reviewPageShown = true;

@@ -82,7 +82,7 @@
     $ctrl.$doCheck = function () {
       var hashCode = utils.hashCode($ctrl.buildConfigs);
 
-      if (hashCode !== lastHashCode) {
+      if ((hashCode !== lastHashCode) && $ctrl.buildConfigs.length) {
         onChange();
         lastHashCode = hashCode;
       }
