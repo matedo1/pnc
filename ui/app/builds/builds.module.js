@@ -110,7 +110,13 @@
             return BuildResource.get({ id: $stateParams.buildId }).$promise;
           }],
           brewPushResult: ['BuildResource', '$stateParams', function (BuildResource, $stateParams) {
-            return BuildResource.getBrewPushResult({ id: $stateParams.buildId });
+            return BuildResource.getBrewPushResult({ id: $stateParams.buildId }).$promise.then(result => result.status).catch(error => {
+              if (error.status === 404) {
+                console.log('No Brew Push Result is available for Build#' + $stateParams.buildId);
+              } else {
+                throw error;
+              }
+            });
           }],
           buildConfigRevision: ['BuildResource', 'build', function (BuildResource, build) {
             return BuildResource.getRevision({ id: build.buildConfigRevision.id, revisionId: build.buildConfigRevision.rev }).$promise;

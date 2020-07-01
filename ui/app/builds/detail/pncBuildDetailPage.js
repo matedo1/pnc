@@ -43,7 +43,7 @@
 
     $ctrl.$onInit = function () {
       $ctrl.isFinished = $ctrl.build.progress === 'FINISHED';
-      $ctrl.hasPushResults = !!$ctrl.brewPushResult.status;
+      $ctrl.hasPushResults = !!$ctrl.brewPushResult;
 
 
       $scope.$on(events.BUILD_STATUS_CHANGED, (event, build) => {
